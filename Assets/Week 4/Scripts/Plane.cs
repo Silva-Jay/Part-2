@@ -23,6 +23,9 @@ public class Plane : MonoBehaviour
     public Sprite[] planes = new Sprite[4];
     int planeSprites;
 
+    //float for plane distruction proximity
+    float tooClose = 0.2f;
+
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -93,6 +96,9 @@ public class Plane : MonoBehaviour
             }
         }
 
+        //danger zone
+
+        
     }
 
     void OnMouseDown()
@@ -113,5 +119,29 @@ public class Plane : MonoBehaviour
             lineRenderer.SetPosition(lineRenderer.positionCount - 1, newPosition);
             lastPosition = newPosition;
         }
+    }
+    
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        spriteRenderer.color = Color.red;
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (Vector3.Distance(transform.position, collision.transform.position) < tooClose)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerExit2D()
+    {
+        spriteRenderer.color = Color.white;
+    }
+
+    //destroy planes when no longer visible on camera or editor
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
     }
 }
