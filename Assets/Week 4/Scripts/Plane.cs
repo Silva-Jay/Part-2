@@ -26,6 +26,12 @@ public class Plane : MonoBehaviour
     //float for plane distruction proximity
     float tooClose = 0.2f;
 
+    //landing boolean
+    public bool isLanding = false;
+
+    //runway boolean
+    public bool isRunway;
+
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -50,6 +56,7 @@ public class Plane : MonoBehaviour
 
         planeSprites = Random.Range(0, 4);
         spriteRenderer.sprite = planes[planeSprites];
+
     }
 
     void FixedUpdate()
@@ -67,7 +74,8 @@ public class Plane : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
+        //landing
+        if (isLanding == true)
         {
             timerValue += 0.5f * Time.deltaTime;
             float interpolation = landing.Evaluate(timerValue);
@@ -75,6 +83,8 @@ public class Plane : MonoBehaviour
             if(transform.localScale.z < 0.1f)
             {
                 Destroy(gameObject);
+                GameObject.Find("Runway").GetComponent<Runway>().playerScore += 1;
+                isLanding = false;
             }
 
             transform.localScale = Vector3.Lerp(Vector3.one, Vector3.zero, interpolation);
@@ -96,7 +106,7 @@ public class Plane : MonoBehaviour
             }
         }
 
-        //danger zone
+        //danger zone in On Trigger 2D
 
         
     }
@@ -123,12 +133,19 @@ public class Plane : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        spriteRenderer.color = Color.red;
+        if (isRunway == false)
+        {
+            spriteRenderer.color = Color.red;
+        }
+        else if (isRunway == true)
+        {
+            spriteRenderer.color = Color.white;
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (Vector3.Distance(transform.position, collision.transform.position) < tooClose)
+        if (Vector3.Distance(transform.position, collision.transform.position) < tooClose && isRunway == false)
         {
             Destroy(gameObject);
         }
@@ -137,6 +154,7 @@ public class Plane : MonoBehaviour
     private void OnTriggerExit2D()
     {
         spriteRenderer.color = Color.white;
+        isRunway = false;
     }
 
     //destroy planes when no longer visible on camera or editor
