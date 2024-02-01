@@ -14,13 +14,39 @@ public class Plane : MonoBehaviour
     public float speed = 1;
     public AnimationCurve landing;
     float timerValue;
+    SpriteRenderer spriteRenderer;
+
+    //spawn position of plane
+    Vector3 spawnPos;
+
+    //array of sprites
+    public Sprite[] planes = new Sprite[4];
+    int planeSprites;
 
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
         rigidbody = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         lineRenderer.positionCount = 1;
         lineRenderer.SetPosition(0, transform.position);
+
+        //initiate spawnPos vector2
+        spawnPos.x = Random.Range(-5, 5);
+        spawnPos.y = Random.Range(-5, 5);
+        spawnPos.z = 0;
+
+        //position code
+        transform.position = spawnPos;
+
+        //randomize rotation
+        transform.Rotate(0, 0, Random.Range(-10, 10));
+        //randomize speed
+        speed = Random.Range(1, 3);
+        //randomize sprite
+
+        planeSprites = Random.Range(0, 4);
+        spriteRenderer.sprite = planes[planeSprites];
     }
 
     void FixedUpdate()
@@ -66,6 +92,7 @@ public class Plane : MonoBehaviour
                 lineRenderer.positionCount--;
             }
         }
+
     }
 
     void OnMouseDown()
