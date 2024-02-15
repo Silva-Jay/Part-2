@@ -26,6 +26,7 @@ public class Knight : MonoBehaviour
     {
         if (health <= 0)
         {
+            isDead = true;
             animator.SetTrigger("Death");
         }
     }
