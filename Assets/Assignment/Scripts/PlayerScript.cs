@@ -19,11 +19,19 @@ public class PlayerScript : MonoBehaviour
     //animator component
     Animator silva;
 
+    //health float
+    public float health = 10;
+    public float maxHealth = 10;
+
     // Start is called before the first frame update
     void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
         silva = GetComponent<Animator>();
+    }
+    public void isInjured(float damage)
+    {
+        health -= damage;
     }
 
     private void FixedUpdate()
