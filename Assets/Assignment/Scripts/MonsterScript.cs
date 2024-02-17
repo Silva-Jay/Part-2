@@ -18,6 +18,7 @@ public class MonsterScript : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        player = GameObject.FindGameObjectWithTag("Player");
         upwards = rigidbody.position + Vector2.up;
         maxHeight = rigidbody.position.y + 3;
     }
@@ -36,7 +37,6 @@ public class MonsterScript : MonoBehaviour
             }
         }
     }
-
     private void FixedUpdate()
     {
         //increment rigidbody upwards
