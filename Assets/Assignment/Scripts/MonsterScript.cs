@@ -36,11 +36,11 @@ public class MonsterScript : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if (timer > 9)
+        if (timer > 5)
         {
             //monster's face turns red before it damages player
             spriteRenderer.color = Color.red;
-            if (timer > 10)
+            if (timer > 6)
             {
                 //damage player after 10 secs and destroy monster
                 player.SendMessage("isInjured", 1);
