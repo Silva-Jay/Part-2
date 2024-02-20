@@ -6,11 +6,20 @@ using UnityEngine;
 
 public class MonsterScript : MonoBehaviour
 {
+    //player game object
     public GameObject player;
+
+    //monster direction vector
     Vector2 upwards;
+
+    //monster rigidbody
     Rigidbody2D rigidbody;
+
+    //maximum height and timer floats
     public float maxHeight;
     float timer = 0;
+
+    //monster sprite renderer
     SpriteRenderer spriteRenderer;
 
     // Start is called before the first frame update
@@ -27,11 +36,13 @@ public class MonsterScript : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if (timer > 14)
+        if (timer > 9)
         {
+            //monster's face turns red before it damages player
             spriteRenderer.color = Color.red;
-            if (timer > 15)
+            if (timer > 10)
             {
+                //damage player after 10 secs and destroy monster
                 player.SendMessage("isInjured", 1);
                 Destroy(gameObject);
             }
@@ -39,7 +50,7 @@ public class MonsterScript : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        //increment rigidbody upwards
+        //increment rigidbody upwards when spawned, stops at maxheight
         if (upwards.y < maxHeight)
         {
             rigidbody.MovePosition(upwards);
@@ -49,6 +60,10 @@ public class MonsterScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Destroy(gameObject);
+        if (collision.gameObject.tag == "Player") 
+        {
+            //destroy monster if player collides with it
+            Destroy(gameObject);
+        }
     }
 }
