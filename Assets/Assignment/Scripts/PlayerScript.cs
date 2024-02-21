@@ -23,6 +23,9 @@ public class PlayerScript : MonoBehaviour
     public float health = 10;
     public float maxHealth = 10;
 
+    //reference to score text
+    public GameObject scoreText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -66,5 +69,20 @@ public class PlayerScript : MonoBehaviour
 
         silva.SetFloat("Speed", direction.sqrMagnitude);
 
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Monster")
+        {
+            scoreText.SendMessage("addScore");
+        }
+    }
+
+    //if player dies
+    void death()
+    {
+        health = maxHealth;
+        scoreText.SendMessage("resetScore");
     }
 }
