@@ -8,7 +8,8 @@ public class HealthBarScript : MonoBehaviour
 {
 
     public Slider healthBar;
-    // Start is called before the first frame update
+
+    //health bar goes down if player is injured
     void isInjured(float damage)
     {
         healthBar.value -= damage;

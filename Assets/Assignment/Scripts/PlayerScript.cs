@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -69,8 +70,15 @@ public class PlayerScript : MonoBehaviour
 
         silva.SetFloat("Speed", direction.sqrMagnitude);
 
+        //if health hit zero, run death function
+        if (health <= 0) 
+        {
+            death();
+        }
+
     }
 
+    //add 1 to score if player hits monster
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Monster")
@@ -82,7 +90,11 @@ public class PlayerScript : MonoBehaviour
     //if player dies
     void death()
     {
+        //reset health
         health = maxHealth;
+        //reset score to zero
         scoreText.SendMessage("resetScore");
+        //load game over scene
+        SceneManager.LoadScene(2);
     }
 }

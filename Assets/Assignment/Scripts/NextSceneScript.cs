@@ -7,9 +7,15 @@ using UnityEngine.SceneManagement;
 
 public class NextSceneScript : MonoBehaviour
 {
-
+    //load next scene if portal is collided with
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        SceneManager.LoadScene(1);
+        loadScene(1);
+    }
+
+    //load scene function
+    public void loadScene(int sceneNum)
+    {
+        SceneManager.LoadScene(sceneNum);
     }
 }
