@@ -11,6 +11,7 @@ public class Controller : MonoBehaviour
     float charge;
     public float maxCharge = 1;
     Vector2 direction;
+    public static float score;
     public static PlayerLogicScript SelectedPlayer { get; private set; }
     public TextMeshProUGUI scoreLabel;
 
@@ -56,7 +57,7 @@ public class Controller : MonoBehaviour
             direction = ((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - (Vector2)SelectedPlayer.transform.position).normalized * charge;
         }
 
-        scoreLabel.text = "Score: " + Ball.score;
+        scoreLabel.text = "Score: " + score;
     }
 
 }

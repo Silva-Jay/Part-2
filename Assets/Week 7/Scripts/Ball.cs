@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    public static float score {  get; private set; }
+    float score;
     Vector3 startPos;
     Rigidbody2D ball;
     // Start is called before the first frame update
@@ -29,6 +29,7 @@ public class Ball : MonoBehaviour
             score += 1;
             transform.position = startPos;
             ball.velocity = Vector2.zero;
+            Controller.score = score;
         }
     }
 }
