@@ -8,11 +8,14 @@ public class PlayerLogicScript : MonoBehaviour
 {
     SpriteRenderer playerBase;
     Color baseColor;
+    Rigidbody2D rb;
+    public float speed = 500;
     // Start is called before the first frame update
     void Start()
     {
         playerBase = GetComponent<SpriteRenderer>();
         baseColor = playerBase.color;
+        rb = GetComponent<Rigidbody2D>();
     }
 
     public void Selected(bool isClicked)
@@ -28,8 +31,11 @@ public class PlayerLogicScript : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        Selected(true);
+        Controller.SetSelectedPlayer(this);
     }
 
-
+    public void Move(Vector2 direction)
+    {
+        rb.AddForce(direction * speed);
+    }
 }
